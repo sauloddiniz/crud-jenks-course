@@ -3,6 +3,7 @@ package com.example.crud.demo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @EqualsAndHashCode(of = "id")
@@ -11,8 +12,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
-public class Account {
+@Table(name = "ACCOUNTS")
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
