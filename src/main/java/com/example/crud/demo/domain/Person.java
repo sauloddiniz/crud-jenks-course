@@ -1,10 +1,13 @@
 package com.example.crud.demo.domain;
 
+import com.example.crud.demo.domain.DTO.AccountDTO;
 import com.example.crud.demo.domain.DTO.PersonDTO;
-import lombok.*;
-
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.*;
+import lombok.*;
 
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
@@ -15,20 +18,39 @@ import java.io.Serializable;
 @Table(name = "PERSONS")
 public class Person implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String secondName;
-    private String cpf;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public static PersonDTO convertDTO(Person person) {
-        return PersonDTO.builder()
-                .id(person.getId())
-                .name(person.getName())
-                .secondName(person.getSecondName())
-                .cpf(person.getCpf())
-                .build();
-    }
+  private String name;
+  private String secondName;
+  private String cpf;
+
+  @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+  @JsonIgnoreProperties({"person"})
+  private List<Account> accountList;
+
+  public static Person getConverter(PersonDTO dto) {
+
+    return Person.builder()
+        .id(dto.getId())
+        .name(dto.getName())
+        .secondName(dto.getSecondName())
+        .cpf(dto.getCpf())
+        .build();
+  }
+
+  public static Person postConverter(PersonDTO dto) {
+
+    return Person.builder()
+        .id(dto.getId())
+        .name(dto.getName())
+        .secondName(dto.getSecondName())
+        .cpf(dto.getCpf())
+        .build();
+  }
+
+  private static List<Account> converterListAccountDTO(List<AccountDTO> dtoList) {
+    return dtoList.stream().map(Account::converterDTO).collect(Collectors.toList());
+  }
 }
-

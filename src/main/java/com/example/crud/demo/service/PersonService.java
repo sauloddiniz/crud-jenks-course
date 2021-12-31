@@ -1,11 +1,18 @@
 package com.example.crud.demo.service;
 
 import com.example.crud.demo.domain.DTO.PersonDTO;
-import org.springframework.validation.BindingResult;
+import com.example.crud.demo.domain.Person;
+import java.util.List;
 
 public interface PersonService {
 
-    PersonDTO findById(Long id);
+  Person findById(Long id);
 
-    PersonDTO save(PersonDTO person, BindingResult result);
+  List<Person> findAll();
+
+  Person save(PersonDTO person);
+
+  Person update(PersonDTO person);
+
+  void delete(Long id);
 }
