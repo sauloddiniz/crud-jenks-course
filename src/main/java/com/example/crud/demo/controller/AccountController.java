@@ -8,11 +8,14 @@ import com.example.crud.demo.service.AccountService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -21,6 +24,7 @@ public class AccountController {
 
   @GetMapping
   public ResponseEntity<List<AccountDTO>> getAllAccounts() {
+    log.info("Get list accounts");
     return ResponseEntity.ok(
         service.findAll().stream().map(AccountDTO::converter).collect(Collectors.toList()));
   }
