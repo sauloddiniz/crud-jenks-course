@@ -3,7 +3,7 @@ package com.example.crud.demo.controller.fields;
 import static java.util.Arrays.stream;
 
 import com.example.crud.demo.domain.DTO.errors.FieldErrorsDTO;
-import com.example.crud.demo.execptions.FieldErrorsExceptions;
+import com.example.crud.demo.execptions.rulles.FieldErrorsExceptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

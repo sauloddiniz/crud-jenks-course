@@ -2,6 +2,7 @@ package com.example.crud.demo.execptions;
 
 import com.example.crud.demo.controller.fields.FieldsErrors;
 import com.example.crud.demo.domain.DTO.errors.ResponseErrorApiDTO;
+import com.example.crud.demo.execptions.rulles.*;
 import java.time.LocalDateTime;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

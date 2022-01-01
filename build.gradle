@@ -3,11 +3,14 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'com.diffplug.spotless' version '5.12.5'
+	id 'war'
 }
 
 group = 'com.example.crud'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+apply plugin: 'war'
 
 configurations {
 	compileOnly {
@@ -18,6 +21,7 @@ configurations {
 repositories {
 	mavenCentral()
 }
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,6 +37,9 @@ test {
 	useJUnitPlatform()
 }
 
+war {
+	enabled=true
+}
 
 spotless {
 	java {

@@ -1,4 +1,4 @@
-package com.example.crud.demo.execptions;
+package com.example.crud.demo.execptions.rulles;
 
 import javax.persistence.EntityNotFoundException;
 

@@ -1,4 +1,4 @@
-package com.example.crud.demo.execptions;
+package com.example.crud.demo.execptions.rulles;
 
 public class NotBalanceException extends RuntimeException {
   public NotBalanceException(String msg) {

@@ -1,4 +1,4 @@
-package com.example.crud.demo.execptions;
+package com.example.crud.demo.execptions.rulles;
 
 public class NumberAccountRegisterFoundException extends RuntimeException {
   public NumberAccountRegisterFoundException(String numberAccount) {
