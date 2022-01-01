@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public Account update(Account account, BindingResult result) {
     FieldsErrors.fieldsHasErrors(result);
-    Account accountBd = findOne(account.getId());
+    var accountBd = findOne(account.getId());
     if (!account.getNumberAccount().equals(accountBd.getNumberAccount())) {
       checkExistenceNumberAccount(account.getNumberAccount());
     }
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public Account withdrawBalance(AccountDTO accountDTO) {
-    Account accountBd = findByNumberAccount(accountDTO.getNumberAccount());
+    var accountBd = findByNumberAccount(accountDTO.getNumberAccount());
     checkValue(accountDTO.getWithdraw());
     hasBalance(accountDTO, accountBd);
     repository.updateBalance(
@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public Account depositBalance(AccountDTO accountDTO) {
-    Account accountBd = findByNumberAccount(accountDTO.getNumberAccount());
+    var accountBd = findByNumberAccount(accountDTO.getNumberAccount());
     checkValue(accountDTO.getDeposit());
     repository.updateBalance(accountBd.getId(), accountBd.depositBalance(accountDTO.getDeposit()));
     return accountBd;

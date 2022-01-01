@@ -1,14 +1,11 @@
 package com.example.crud.demo.controller;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 import com.example.crud.demo.domain.Account;
 import com.example.crud.demo.domain.DTO.AccountDTO;
 import com.example.crud.demo.service.AccountService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +29,7 @@ public class AccountController {
   @PostMapping
   public ResponseEntity<AccountDTO> saveAccount(
       @Valid @RequestBody AccountDTO accountDTO, BindingResult result) {
-    Account account = service.save(Account.converterDTO(accountDTO), result);
+    var account = service.save(Account.converterDTO(accountDTO), result);
     return ResponseEntity.ok().body(AccountDTO.converter(account));
   }
 
@@ -41,7 +38,7 @@ public class AccountController {
       @PathVariable("id") Long id,
       @Valid @RequestBody AccountDTO accountDTO,
       BindingResult result) {
-    Account account = service.update(Account.converterDTO(accountDTO), result);
+    var account = service.update(Account.converterDTO(accountDTO), result);
     return ResponseEntity.ok().body(AccountDTO.converter(account));
   }
 

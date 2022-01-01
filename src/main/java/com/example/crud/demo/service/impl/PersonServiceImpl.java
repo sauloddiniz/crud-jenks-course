@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public Person update(PersonDTO person, BindingResult result) {
     FieldsErrors.fieldsHasErrors(result);
-    Person personBd = findOne(person.getId());
+    var personBd = findOne(person.getId());
     if (!person.getCpf().equals(personBd.getCpf())) {
       checkExistenceCpf(person.getCpf());
     }
