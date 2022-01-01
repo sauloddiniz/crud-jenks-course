@@ -1,4 +1,4 @@
-package com.example.crud.demo.domain.DTO.errors.execptions;
+package com.example.crud.demo.execptions;
 
 public class CpfRegisterFoundException extends RuntimeException {
   public CpfRegisterFoundException(String msg) {

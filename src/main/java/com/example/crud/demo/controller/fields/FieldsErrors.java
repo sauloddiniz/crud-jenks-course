@@ -3,7 +3,7 @@ package com.example.crud.demo.controller.fields;
 import static java.util.Arrays.stream;
 
 import com.example.crud.demo.domain.DTO.errors.FieldErrorsDTO;
-import com.example.crud.demo.domain.DTO.errors.execptions.FieldErrorsExceptions;
+import com.example.crud.demo.execptions.FieldErrorsExceptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-public class FieldsHasErrors {
+public class FieldsErrors {
 
   public static void fieldsHasErrors(BindingResult result) {
     if (result.hasErrors()) {

@@ -1,4 +1,4 @@
-package com.example.crud.demo.domain.DTO.errors.execptions;
+package com.example.crud.demo.execptions;
 
 public class FieldErrorsExceptions extends RuntimeException {
 

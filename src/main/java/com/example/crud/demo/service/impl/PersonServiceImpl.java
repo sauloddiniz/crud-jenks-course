@@ -1,14 +1,16 @@
 package com.example.crud.demo.service.impl;
 
+import com.example.crud.demo.controller.fields.FieldsErrors;
 import com.example.crud.demo.domain.DTO.PersonDTO;
-import com.example.crud.demo.domain.DTO.errors.execptions.CpfRegisterFoundException;
-import com.example.crud.demo.domain.DTO.errors.execptions.ObjectNotFoundException;
 import com.example.crud.demo.domain.Person;
+import com.example.crud.demo.execptions.CpfRegisterFoundException;
+import com.example.crud.demo.execptions.ObjectNotFoundException;
 import com.example.crud.demo.repository.PersonRepository;
 import com.example.crud.demo.service.PersonService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -25,13 +27,15 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Person save(PersonDTO person) {
+  public Person save(PersonDTO person, BindingResult result) {
+    FieldsErrors.fieldsHasErrors(result);
     checkExistenceCpf(person.getCpf());
     return rep.save(Person.postConverter(person));
   }
 
   @Override
-  public Person update(PersonDTO person) {
+  public Person update(PersonDTO person, BindingResult result) {
+    FieldsErrors.fieldsHasErrors(result);
     Person personBd = findOne(person.getId());
     if (!person.getCpf().equals(personBd.getCpf())) {
       checkExistenceCpf(person.getCpf());

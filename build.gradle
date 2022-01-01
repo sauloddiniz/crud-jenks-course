@@ -33,6 +33,7 @@ test {
 	useJUnitPlatform()
 }
 
+
 spotless {
 	java {
 		importOrder()

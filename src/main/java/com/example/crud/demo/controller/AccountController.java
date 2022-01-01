@@ -1,14 +1,17 @@
 package com.example.crud.demo.controller;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
+import com.example.crud.demo.domain.Account;
 import com.example.crud.demo.domain.DTO.AccountDTO;
 import com.example.crud.demo.service.AccountService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
@@ -20,5 +23,41 @@ public class AccountController {
   public ResponseEntity<List<AccountDTO>> getAllAccounts() {
     return ResponseEntity.ok(
         service.findAll().stream().map(AccountDTO::converter).collect(Collectors.toList()));
+  }
+
+  @PostMapping
+  public ResponseEntity<AccountDTO> saveAccount(
+      @Valid @RequestBody AccountDTO accountDTO, BindingResult result) {
+    Account account = service.save(Account.converterDTO(accountDTO), result);
+    return ResponseEntity.ok().body(AccountDTO.converter(account));
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<AccountDTO> updateAccount(
+      @PathVariable("id") Long id,
+      @Valid @RequestBody AccountDTO accountDTO,
+      BindingResult result) {
+    Account account = service.update(Account.converterDTO(accountDTO), result);
+    return ResponseEntity.ok().body(AccountDTO.converter(account));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<AccountDTO> deleteAccount(@PathVariable("id") Long id) {
+    service.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/{id}/withdraw")
+  public ResponseEntity<AccountDTO> withdrawBalance(
+      @RequestParam("numberAccount") String numberAccount, @RequestBody AccountDTO accountDTO) {
+    accountDTO.setNumberAccount(numberAccount);
+    return ResponseEntity.ok().body(AccountDTO.converter(service.withdrawBalance(accountDTO)));
+  }
+
+  @PutMapping("/deposit")
+  public ResponseEntity<AccountDTO> depositBalance(
+      @RequestParam("numberAccount") String numberAccount, @RequestBody AccountDTO accountDTO) {
+    accountDTO.setNumberAccount(numberAccount);
+    return ResponseEntity.ok().body(AccountDTO.converter(service.depositBalance(accountDTO)));
   }
 }

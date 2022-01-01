@@ -28,6 +28,14 @@ public class Account implements Serializable {
   private String numberAccount;
   private BigDecimal balance;
 
+  public BigDecimal depositBalance(BigDecimal deposit) {
+    return this.balance = this.balance.add(deposit);
+  }
+
+  public BigDecimal withdrawBalance(BigDecimal withdraw) {
+    return this.balance = this.balance.subtract(withdraw);
+  }
+
   public static Account converterDTO(AccountDTO dto) {
     return Account.builder()
         .id(dto.getId())

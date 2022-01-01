@@ -27,6 +27,8 @@ public class AccountDTO implements Serializable {
 
   private String numberAccount;
   private BigDecimal balance;
+  private BigDecimal withdraw;
+  private BigDecimal deposit;
 
   public static AccountDTO converter(Account account) {
     return AccountDTO.builder()
