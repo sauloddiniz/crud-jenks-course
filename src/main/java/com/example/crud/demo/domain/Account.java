@@ -1,10 +1,11 @@
 package com.example.crud.demo.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
+import com.example.crud.demo.domain.DTO.AccountDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.*;
+import lombok.*;
 
 @EqualsAndHashCode(of = "id")
 @Data
@@ -15,13 +16,32 @@ import java.math.BigDecimal;
 @Table(name = "ACCOUNTS")
 public class Account implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idPerson")
-    private Person person;
-    private String numberAccount;
-    private BigDecimal balance;
+  @ManyToOne
+  @JoinColumn(name = "idPerson")
+  @JsonIgnoreProperties({"accountList"})
+  private Person person;
+
+  private String numberAccount;
+  private BigDecimal balance;
+
+  public BigDecimal depositBalance(BigDecimal deposit) {
+    return this.balance = this.balance.add(deposit);
+  }
+
+  public BigDecimal withdrawBalance(BigDecimal withdraw) {
+    return this.balance = this.balance.subtract(withdraw);
+  }
+
+  public static Account converterDTO(AccountDTO dto) {
+    return Account.builder()
+        .id(dto.getId())
+        .balance(dto.getBalance())
+        .numberAccount(dto.getNumberAccount())
+        .person(dto.getPerson())
+        .build();
+  }
 }
