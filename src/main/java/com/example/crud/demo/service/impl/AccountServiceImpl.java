@@ -11,11 +11,13 @@ import com.example.crud.demo.repository.AccountRepository;
 import com.example.crud.demo.service.AccountService;
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 @Service
+@AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
   @Autowired private AccountRepository repository;
