@@ -14,7 +14,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 @Service
 @AllArgsConstructor
@@ -28,15 +27,13 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account save(Account account, BindingResult result) {
-    FieldsErrors.fieldsHasErrors(result);
+  public Account save(Account account) {
     checkExistenceNumberAccount(account.getNumberAccount());
     return repository.save(account);
   }
 
   @Override
-  public Account update(Account account, BindingResult result) {
-    FieldsErrors.fieldsHasErrors(result);
+  public Account update(Account account) {
     var accountBd = findOne(account.getId());
     if (!account.getNumberAccount().equals(accountBd.getNumberAccount())) {
       checkExistenceNumberAccount(account.getNumberAccount());

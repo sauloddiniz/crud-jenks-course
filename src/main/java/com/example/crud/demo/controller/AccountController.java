@@ -1,5 +1,6 @@
 package com.example.crud.demo.controller;
 
+import com.example.crud.demo.controller.fields.FieldsErrors;
 import com.example.crud.demo.domain.Account;
 import com.example.crud.demo.domain.DTO.AccountDTO;
 import com.example.crud.demo.service.AccountService;
@@ -29,7 +30,8 @@ public class AccountController {
   @PostMapping
   public ResponseEntity<AccountDTO> saveAccount(
       @Valid @RequestBody AccountDTO accountDTO, BindingResult result) {
-    var account = service.save(Account.converterDTO(accountDTO), result);
+    FieldsErrors.fieldsHasErrors(result);
+    var account = service.save(Account.converterDTO(accountDTO));
     return ResponseEntity.ok().body(AccountDTO.converter(account));
   }
 
@@ -38,7 +40,8 @@ public class AccountController {
       @PathVariable("id") Long id,
       @Valid @RequestBody AccountDTO accountDTO,
       BindingResult result) {
-    var account = service.update(Account.converterDTO(accountDTO), result);
+    FieldsErrors.fieldsHasErrors(result);
+    var account = service.update(Account.converterDTO(accountDTO));
     return ResponseEntity.ok().body(AccountDTO.converter(account));
   }
 
