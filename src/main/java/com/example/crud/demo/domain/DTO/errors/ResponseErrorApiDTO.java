@@ -21,5 +21,5 @@ public class ResponseErrorApiDTO implements Serializable {
   private HttpStatus status;
   private LocalDateTime timestamp;
   private String message;
-  private List<FieldErrorsDTO> errorsFields;
+  private List<String> errorsFields;
 }

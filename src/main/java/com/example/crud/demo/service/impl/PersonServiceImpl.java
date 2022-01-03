@@ -7,7 +7,6 @@ import com.example.crud.demo.execptions.rulles.ObjectNotFoundException;
 import com.example.crud.demo.repository.PersonRepository;
 import com.example.crud.demo.service.PersonService;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

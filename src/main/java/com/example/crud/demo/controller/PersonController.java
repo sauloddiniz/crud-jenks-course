@@ -1,6 +1,5 @@
 package com.example.crud.demo.controller;
 
-import com.example.crud.demo.controller.fields.FieldsErrors;
 import com.example.crud.demo.domain.DTO.PersonDTO;
 import com.example.crud.demo.domain.Person;
 import com.example.crud.demo.service.PersonService;
@@ -33,9 +32,7 @@ public class PersonController {
   }
 
   @PostMapping
-  public ResponseEntity<PersonDTO> savePerson(
-      @Valid @RequestBody PersonDTO person, BindingResult result) {
-    FieldsErrors.fieldsHasErrors(result);
+  public ResponseEntity<PersonDTO> savePerson(@Valid @RequestBody PersonDTO person) {
     Person saved = service.save(person);
     return ResponseEntity.ok(PersonDTO.postConverter(saved));
   }
@@ -43,7 +40,6 @@ public class PersonController {
   @PutMapping("/{id}")
   public ResponseEntity<PersonDTO> updatePerson(
       @PathVariable("id") Long id, @Valid @RequestBody PersonDTO person, BindingResult result) {
-    FieldsErrors.fieldsHasErrors(result);
     Person saved = service.update(person);
     return ResponseEntity.ok(PersonDTO.postConverter(saved));
   }

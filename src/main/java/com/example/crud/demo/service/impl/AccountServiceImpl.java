@@ -1,12 +1,10 @@
 package com.example.crud.demo.service.impl;
 
-import com.example.crud.demo.controller.fields.FieldsErrors;
 import com.example.crud.demo.domain.Account;
 import com.example.crud.demo.domain.DTO.AccountDTO;
 import com.example.crud.demo.execptions.rulles.NotBalanceException;
 import com.example.crud.demo.execptions.rulles.NumberAccountRegisterFoundException;
 import com.example.crud.demo.execptions.rulles.ObjectNotFoundException;
-import com.example.crud.demo.execptions.rulles.ValueMinOrEqualZeroException;
 import com.example.crud.demo.repository.AccountRepository;
 import com.example.crud.demo.service.AccountService;
 import java.math.BigDecimal;
@@ -50,31 +48,23 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public Account withdrawBalance(AccountDTO accountDTO) {
     var accountBd = findByNumberAccount(accountDTO.getNumberAccount());
-    checkValue(accountDTO.getWithdraw());
-    hasBalance(accountDTO, accountBd);
-    repository.updateBalance(
-        accountBd.getId(), accountBd.withdrawBalance(accountDTO.getWithdraw()));
+    BigDecimal valueWithdraw = getBalanceAccount(accountDTO, accountBd);
+    repository.updateBalance(accountBd.getId(), accountBd.withdrawBalance(valueWithdraw));
     return accountBd;
   }
 
   @Override
   public Account depositBalance(AccountDTO accountDTO) {
     var accountBd = findByNumberAccount(accountDTO.getNumberAccount());
-    checkValue(accountDTO.getDeposit());
     repository.updateBalance(accountBd.getId(), accountBd.depositBalance(accountDTO.getDeposit()));
     return accountBd;
   }
 
-  private void hasBalance(AccountDTO accountDTO, Account accountBd) {
+  private BigDecimal getBalanceAccount(AccountDTO accountDTO, Account accountBd) {
     if (accountBd.getBalance().compareTo(accountDTO.getWithdraw()) < 0) {
       throw new NotBalanceException(accountBd.getBalance().toString());
     }
-  }
-
-  private void checkValue(BigDecimal value) {
-    if (value.signum() <= 0) {
-      throw new ValueMinOrEqualZeroException();
-    }
+    return accountDTO.getWithdraw();
   }
 
   private Account findOne(Long id) {
@@ -82,9 +72,8 @@ public class AccountServiceImpl implements AccountService {
   }
 
   private void checkExistenceNumberAccount(String numberAccount) {
-    if (repository.findByNumberAccount(numberAccount).isPresent()) {
+    if (repository.findByNumberAccount(numberAccount).isPresent())
       throw new NumberAccountRegisterFoundException(numberAccount);
-    }
   }
 
   private Account findByNumberAccount(String numberAccount) {

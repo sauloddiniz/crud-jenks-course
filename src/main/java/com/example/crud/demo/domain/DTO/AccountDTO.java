@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,8 +27,14 @@ public class AccountDTO implements Serializable {
   private Person person;
 
   private String numberAccount;
+
+  @Min(0)
   private BigDecimal balance;
+
+  @Min(1)
   private BigDecimal withdraw;
+
+  @Min(1)
   private BigDecimal deposit;
 
   public static AccountDTO converter(Account account) {
